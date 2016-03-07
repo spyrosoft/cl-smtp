@@ -18,10 +18,6 @@
 
 (in-package :cl-smtp)
 
-(defparameter *x-mailer* (format nil "cl-smtp (~A ~A)" 
-				 (lisp-implementation-type)
-				 (lisp-implementation-version)))
-
 (defun check-arg (arg name)
   (cond
    ((or (stringp arg)
@@ -437,9 +433,6 @@
   (write-to-smtp stream (format nil "Subject: ~A" 
                                 (rfc2045-q-encode-string 
                                  subject :external-format external-format)))
-  (write-to-smtp stream (format nil "X-Mailer: ~A" 
-				(rfc2045-q-encode-string 
-                                 *x-mailer* :external-format external-format)))
   (when reply-to
     (write-to-smtp stream (format nil "Reply-To: ~A" 
                                   (rfc2045-q-encode-string 
